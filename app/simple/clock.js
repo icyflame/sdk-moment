@@ -7,6 +7,7 @@ import { preferences } from "user-settings";
 
 import { days, months, monthsShort } from "./locales/en.js";
 import * as util from "./utils";
+import * as common_util from "../../common/util";
 
 let dateFormat, clockCallback;
 
@@ -20,6 +21,7 @@ export function initialize(granularity, dateFormatString, callback) {
 function tickHandler(evt) {
   let today = evt.date;
   let dayName = days[today.getDay()];
+  let year = today.getFullYear();
   let month = util.zeroPad(today.getMonth() + 1);
   let monthName = months[today.getMonth()];
   let monthNameShort = monthsShort[today.getMonth()];
@@ -34,20 +36,27 @@ function tickHandler(evt) {
     hours = util.zeroPad(hours);
   }
   let mins = util.zeroPad(today.getMinutes());
+  let seconds = util.zeroPad(today.getSeconds());
 
-  let timeString = `${hours}:${mins}`;
+  hours = common_util.monoDigits(hours);
+  mins = common_util.monoDigits(mins);
+  seconds = common_util.monoDigits(seconds);
+  let timeString = `${hours}:${mins}:${seconds}`;
   let dateString = today;
 
   switch(dateFormat) {
-    case "shortDate":
-      dateString = `${dayNumber} ${monthNameShort}`;
-      break;
-    case "mediumDate":
-      dateString = `${dayNumber} ${monthName}`;
-      break;
-    case "longDate":
-      dateString = `${dayName} ${monthName} ${dayNumber}`;
-      break;
+  case "shortDate":
+    dateString = `${dayNumber} ${monthNameShort}`;
+    break;
+  case "mediumDate":
+    dateString = `${dayNumber} ${monthName}`;
+    break;
+  case "longDate":
+    dateString = `${dayName} ${monthName} ${dayNumber}`;
+    break;
+  case "longDateYMD":
+    dateString = `${dayName} ${year}-${month}-${dayNumber}`;
+    break;
   }
   clockCallback({time: timeString, date: dateString});
 }
