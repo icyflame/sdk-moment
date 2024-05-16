@@ -1,20 +1,32 @@
 {
+  "name": "demo-clock",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@fitbit/sdk": "~6.1.0",
+    "@fitbit/sdk-cli": "^1.7.3"
+  },
   "fitbit": {
+    "appUUID": "86fbb31c-763d-43f5-8d43-a74ea5f34689",
     "appType": "clockface",
-    "appDisplayName": "SDK Moment",
+    "appDisplayName": "Demo Clock",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#ffffff",
     "requestedPermissions": [
       "access_activity",
       "access_heart_rate",
       "access_user_profile"
     ],
     "buildTargets": [
-      "higgs",
-      "meson"
+      "atlas",
+      "vulcan"
     ],
-    "i18n": {
-      "en": {
-        "name": "SDK Moment"
-      }
-    }
+    "i18n": {},
+    "defaultLanguage": "en-US"
+  },
+  "scripts": {
+    "build": "fitbit-build",
+    "debug": "fitbit"
   }
 }
